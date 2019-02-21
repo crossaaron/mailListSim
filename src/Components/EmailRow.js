@@ -9,7 +9,7 @@ export default class Inbox extends Component {
                     {this.props.email.date}
                 </div>
                 <div className='email-from'>
-                    {this.props.email.from}
+                    {this.props.email.email}
                 </div>
                 <div className='email-subject'>
                     {this.props.email.subject}

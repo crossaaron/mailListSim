@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import EMAILS from '../MOCK_DATA'
 import EmailRow from './EmailRow'
+import EmailRead from "./EmailRead";
+
 
 export default class Inbox extends Component {
     constructor(props) {
@@ -13,6 +15,7 @@ export default class Inbox extends Component {
         return (
             <div id='inbox'>
                 <h1>Inbox</h1>
+                <EmailRead email={this.state.emails[0]} />
                 <p>You have {this.state.emails.length} emails</p>
                 <div id='all-emails'>
                     {this.state.emails.map((email, index) => {

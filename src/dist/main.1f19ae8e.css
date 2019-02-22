@@ -13,6 +13,7 @@
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
+    padding-top: 3px;
 }
 .email-toggle-is-read {
     width: 10%;

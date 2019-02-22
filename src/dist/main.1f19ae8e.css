@@ -1,7 +1,10 @@
 .email-row {
     overflow: hidden;
 }
-
+.email-is-read {
+    background-color: rgba(0,0,0, .2);
+}
+.email-toggle-is-read,
 .email-date,
 .email-from,
 .email-subject,
@@ -10,6 +13,9 @@
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
+}
+.email-toggle-is-read {
+    width: 10%;
 }
 .email-date {
     width: 10%;
@@ -21,7 +27,7 @@
     width: 30%;
 }
 .email-body {
-    width: 45%;
+    width: 35%;
 }
 body {
     background-color: darkgreen;

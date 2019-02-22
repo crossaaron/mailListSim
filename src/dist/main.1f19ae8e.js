@@ -30446,9 +30446,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -30459,18 +30459,53 @@ var Inbox =
 function (_Component) {
   _inherits(Inbox, _Component);
 
-  function Inbox() {
+  function Inbox(props) {
+    var _this;
+
     _classCallCheck(this, Inbox);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Inbox).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Inbox).call(this, props));
+    _this.toggleIsRead = _this.toggleIsRead.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Inbox, [{
+    key: "getClassName",
+    value: function getClassName() {
+      var className = 'email-row';
+      var emailId = this.props.email.id;
+
+      if (this.props.isRead[emailId]) {
+        className += ' email-is-read';
+      }
+
+      return className;
+    }
+  }, {
+    key: "toggleIsRead",
+    value: function toggleIsRead() {
+      var emailId = this.props.email.id;
+
+      if (this.props.isRead[this.props.email.id]) {
+        this.props.markUnread(emailId);
+      } else {
+        this.props.markRead(emailId);
+      }
+
+      return true; // return true indicates that this function handled the 'click" and does not fire any
+      //other click function for that element (i.e. just clicks the button, not the row that
+      //takes you to the email details Link
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        id: "email-row"
+        className: this.getClassName()
       }, _react.default.createElement("div", {
+        className: "email-toggle-is-read"
+      }, _react.default.createElement("button", {
+        onClick: this.toggleIsRead
+      }, "is read?")), _react.default.createElement("div", {
         className: "email-date"
       }, this.props.email.date), _react.default.createElement("div", {
         className: "email-from"
@@ -30536,6 +30571,8 @@ function (_Component) {
   _createClass(Inbox, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       console.log('**INBOX' + this.props);
       return _react.default.createElement("div", {
         id: "inbox"
@@ -30546,7 +30583,10 @@ function (_Component) {
           key: index,
           to: "/read/".concat(email.id)
         }, _react.default.createElement(_EmailRow.default, {
-          email: email
+          email: email,
+          isRead: _this.props.isRead,
+          markRead: _this.props.markRead,
+          markUnread: _this.props.markUnread
         }));
       })));
     }
@@ -30600,6 +30640,12 @@ function (_Component) {
   }
 
   _createClass(EmailRead, [{
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      var emailId = this.props.match.params.id;
+      this.props.markRead(emailId);
+    }
+  }, {
     key: "render",
     value: function render() {
       var emailId = this.props.match.params.id;
@@ -31461,6 +31507,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -31469,9 +31519,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -31489,12 +31539,37 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
-      emails: _MOCK_DATA.default
+      emails: _MOCK_DATA.default,
+      isRead: {
+        "e4cb2243-7453-461c-a824-55ad3cbfd571": true
+      }
     };
+    _this.markRead = _this.markRead.bind(_assertThisInitialized(_this));
+    _this.markUnread = _this.markUnread.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(App, [{
+    key: "markRead",
+    value: function markRead(emailId) {
+      var isRead = _objectSpread({}, this.state.isRead);
+
+      isRead[emailId] = true;
+      this.setState({
+        isRead: isRead
+      });
+    }
+  }, {
+    key: "markUnread",
+    value: function markUnread(emailId) {
+      var isRead = _objectSpread({}, this.state.isRead);
+
+      isRead[emailId] = false;
+      this.setState({
+        isRead: isRead
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -31506,7 +31581,10 @@ function (_Component) {
         path: "/",
         component: function component() {
           return _react.default.createElement(_Inbox.default, {
-            emails: _this2.state.emails
+            emails: _this2.state.emails,
+            isRead: _this2.state.isRead,
+            markRead: _this2.markRead,
+            markUnread: _this2.markUnread
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -31514,7 +31592,8 @@ function (_Component) {
         path: "/read/:id",
         component: function component() {
           return _react.default.createElement(_EmailRead.default, {
-            emails: _this2.state.emails
+            emails: _this2.state.emails,
+            markRead: _this2.markRead
           });
         }
       }))));
@@ -31571,7 +31650,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57981" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63510" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

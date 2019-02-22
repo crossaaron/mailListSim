@@ -14,7 +14,7 @@ export default class App extends Component {
     }
 
     render() {
-        console.log('**App.js' + this.props);
+
         return (
             <div id='app-container'>
                 <BrowserRouter>

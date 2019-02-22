@@ -3,6 +3,7 @@ import './EmailRow.css'
 
 export default class Inbox extends Component {
     render() {
+
         return (
             <div id='email-row'>
                 <div className='email-date'>

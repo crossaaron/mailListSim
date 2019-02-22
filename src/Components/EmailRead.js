@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
-export default class EmailRead extends Component {
+
+class EmailRead extends Component {
     render() {
+        const emailId = this.props.match.params.id;
+        const email = this.props.emails.filter(email => {
+            email.id === emailId
+        })[0]
+        console.log('email', email);
         return (
             <div>
                 <h1>{this.props.email.subject}</h1>
@@ -11,3 +18,5 @@ export default class EmailRead extends Component {
         )
     }
 }
+
+export default withRouter(EmailRead)

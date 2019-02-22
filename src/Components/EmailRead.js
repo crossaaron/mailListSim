@@ -4,7 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 class EmailRead extends Component {
     componentWillUnmount() {
         const emailId = this.props.match.params.id;
-        this.props.markRead(emailId);
+        this.props.markRead(emailId)
     }
 
     render() {

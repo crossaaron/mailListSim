@@ -30434,6 +30434,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 require("./EmailRow.css");
 
+var _reactRouterDom = require("react-router-dom");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -30505,7 +30507,9 @@ function (_Component) {
         className: "email-toggle-is-read"
       }, _react.default.createElement("button", {
         onClick: this.toggleIsRead
-      }, "is read?")), _react.default.createElement("div", {
+      }, "is read?")), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/read/".concat(this.props.email.id)
+      }, _react.default.createElement("div", {
         className: "email-date"
       }, this.props.email.date), _react.default.createElement("div", {
         className: "email-from"
@@ -30513,7 +30517,7 @@ function (_Component) {
         className: "email-subject"
       }, this.props.email.subject), _react.default.createElement("div", {
         className: "email-body"
-      }, this.props.email.body));
+      }, this.props.email.body)));
     }
   }]);
 
@@ -30521,7 +30525,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Inbox;
-},{"react":"node_modules/react/index.js","./EmailRow.css":"Components/EmailRow.css"}],"Components/Inbox.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./EmailRow.css":"Components/EmailRow.css","react-router-dom":"node_modules/react-router-dom/es/index.js"}],"Components/Inbox.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30530,8 +30534,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
 
 var _EmailRow = _interopRequireDefault(require("./EmailRow"));
 
@@ -30579,15 +30581,13 @@ function (_Component) {
       }, _react.default.createElement("h1", null, "Inbox"), _react.default.createElement("p", null, "You have ", this.props.emails.length, " emails"), _react.default.createElement("div", {
         id: "all-emails"
       }, this.props.emails.map(function (email, index) {
-        return _react.default.createElement(_reactRouterDom.Link, {
+        return _react.default.createElement(_EmailRow.default, {
           key: index,
-          to: "/read/".concat(email.id)
-        }, _react.default.createElement(_EmailRow.default, {
           email: email,
           isRead: _this.props.isRead,
           markRead: _this.props.markRead,
           markUnread: _this.props.markUnread
-        }));
+        });
       })));
     }
   }]);
@@ -30596,7 +30596,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Inbox;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","./EmailRow":"Components/EmailRow.js"}],"Components/EmailRead.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./EmailRow":"Components/EmailRow.js"}],"Components/EmailRead.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31650,7 +31650,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63510" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63857" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

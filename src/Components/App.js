@@ -4,6 +4,7 @@ import { BrowserRouter, Route} from "react-router-dom";
 import Inbox from "./Inbox";
 import EmailRead from './EmailRead'
 import EMAILS from "../MOCK_DATA";
+import Nav from './Nav'
 
 export default class App extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ export default class App extends Component {
             <div id='app-container'>
                 <BrowserRouter>
                     <Fragment>
+                        <Nav />
                         <Route exact path='/' component={() => (
                             <Inbox emails={this.state.emails} />
                         )}/>

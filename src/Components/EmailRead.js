@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 class EmailRead extends Component {
     render() {
@@ -7,11 +7,29 @@ class EmailRead extends Component {
         const email = this.props.emails.filter(email => {
             return email.id === emailId
         })[0]
-
+        if (!email) {
+            return (
+                <div>
+                    <h1>Error finding Email</h1>
+                    <p>
+                        Invalid Email id {' '}
+                        <Link to='/'>
+                            Back To Inbox
+                        </Link>
+                    </p>
+                </div>
+            )
+        }
         return (
             <div>
                 <h1>{email.subject}</h1>
                 <h3>{email.date} {' '} {email.email}</h3>
+                {email.body.split('\n\n').map((paragraphText, index) => {
+                    return <p key={index}>
+                                {paragraphText}
+                            </p>
+                    })
+                }
                 <p>{email.body}</p>
             </div>
         )

@@ -30606,7 +30606,18 @@ function (_Component) {
       var email = this.props.emails.filter(function (email) {
         return email.id === emailId;
       })[0];
-      return _react.default.createElement("div", null, _react.default.createElement("h1", null, email.subject), _react.default.createElement("h3", null, email.date, " ", ' ', " ", email.email), _react.default.createElement("p", null, email.body));
+
+      if (!email) {
+        return _react.default.createElement("div", null, _react.default.createElement("h1", null, "Error finding Email"), _react.default.createElement("p", null, "Invalid Email id ", ' ', _react.default.createElement(_reactRouterDom.Link, {
+          to: "/"
+        }, "Back To Inbox")));
+      }
+
+      return _react.default.createElement("div", null, _react.default.createElement("h1", null, email.subject), _react.default.createElement("h3", null, email.date, " ", ' ', " ", email.email), email.body.split('\n\n').map(function (paragraphText, index) {
+        return _react.default.createElement("p", {
+          key: index
+        }, paragraphText);
+      }), _react.default.createElement("p", null, email.body));
     }
   }]);
 
@@ -31368,7 +31379,63 @@ module.exports = [{
   "body": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.\n\nPraesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
   "date": "12/03/2018"
 }];
-},{}],"Components/App.js":[function(require,module,exports) {
+},{}],"Components/Nav.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Nav =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Nav, _Component);
+
+  function Nav() {
+    _classCallCheck(this, Nav);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Nav).apply(this, arguments));
+  }
+
+  _createClass(Nav, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("nav", null, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+      }, "Inbox"));
+    }
+  }]);
+
+  return Nav;
+}(_react.Component);
+
+exports.default = Nav;
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js"}],"Components/App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31385,6 +31452,8 @@ var _Inbox = _interopRequireDefault(require("./Inbox"));
 var _EmailRead = _interopRequireDefault(require("./EmailRead"));
 
 var _MOCK_DATA = _interopRequireDefault(require("../MOCK_DATA"));
+
+var _Nav = _interopRequireDefault(require("./Nav"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31432,7 +31501,7 @@ function (_Component) {
 
       return _react.default.createElement("div", {
         id: "app-container"
-      }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_reactRouterDom.Route, {
+      }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Nav.default, null), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         component: function component() {
@@ -31456,7 +31525,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = App;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","./Inbox":"Components/Inbox.js","./EmailRead":"Components/EmailRead.js","../MOCK_DATA":"MOCK_DATA.json"}],"style.css":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","./Inbox":"Components/Inbox.js","./EmailRead":"Components/EmailRead.js","../MOCK_DATA":"MOCK_DATA.json","./Nav":"Components/Nav.js"}],"style.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -31502,7 +31571,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53041" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57981" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

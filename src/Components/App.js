@@ -13,11 +13,18 @@ export default class App extends Component {
             emails: EMAILS,
             isRead: {
                 "e4cb2243-7453-461c-a824-55ad3cbfd571": true
+            },
+            isSelected: {
+                "e4cb2243-7453-461c-a824-55ad3cbfd571": true
             }
         };
 
         this.markRead = this.markRead.bind(this);
         this.markUnread = this.markUnread.bind(this);
+        this.select = this.select.bind(this);
+        this.deselect = this.deselect.bind(this);
+        this.markSelectedRead = this.markSelectedRead.bind(this);
+        this.markSelectedUnread = this.markSelectedUnread.bind(this);
     }
 
     markRead(emailId) {
@@ -32,6 +39,38 @@ export default class App extends Component {
         this.setState({isRead})
     }
 
+    select(emailId) {
+        let isSelected = {...this.state.isSelected};
+        isSelected[emailId] = true;
+        this.setState({isSelected})
+    }
+
+    deselect(emailId) {
+        let isSelected = {...this.state.isSelected};
+        isSelected[emailId] = false;
+        this.setState({isSelected})
+    }
+
+    markSelectedRead() {
+        let isRead = {...this.state.isRead}
+        for (let key in this.state.isSelected) {
+            if (this.state.isSelected[key]) {
+                isRead[key] = true
+            }
+        }
+        this.setState({isRead})
+    }
+
+    markSelectedUnread() {
+        let isRead = {...this.state.isRead}
+        for (let key in this.state.isSelected) {
+            if (this.state.isSelected[key]) {
+                isRead[key] = false
+            }
+        }
+        this.setState({isRead})
+    }
+
 
     render() {
 
@@ -43,8 +82,13 @@ export default class App extends Component {
                         <Route exact path='/' component={() => (
                             <Inbox emails={this.state.emails}
                                    isRead={this.state.isRead}
+                                   isSelected={this.state.isSelected}
                                    markRead={this.markRead}
-                                   markUnread={this.markUnread} />
+                                   markUnread={this.markUnread}
+                                   markSelectedRead={this.markSelectedRead}
+                                   markSelectedUnread={this.markSelectedUnread}
+                                   select={this.select}
+                                   deselect={this.deselect} />
                         )}/>
                         <Route exact path='/read/:id' component={() => (
                             <EmailRead emails={this.state.emails}

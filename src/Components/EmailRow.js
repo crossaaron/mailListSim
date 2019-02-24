@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default class Inbox extends Component {
     constructor(props) {
         super(props);
-        this.toggleIsRead = this.toggleIsRead.bind(this)
+        this.toggleIsSelected = this.toggleIsSelected.bind(this)
     }
 
     getClassName() {
@@ -17,25 +17,23 @@ export default class Inbox extends Component {
         return className
     }
 
-    toggleIsRead () {
-        let emailId = this.props.email.id;
-        if (this.props.isRead[this.props.email.id]) {
-                this.props.markUnread(emailId)
-        } else {
-            this.props.markRead(emailId)
-        }
-        return true;
-        // return true indicates that this function handled the 'click" and does not fire any
-        //other click function for that element (i.e. just clicks the button, not the row that
-        //takes you to the email details Link
+    toggleIsSelected() {
+        let emailId = this.props.email.id
+            if (!this.props.isSelected[emailId]) {
+                this.props.select(emailId);
+            } else {
+                this.props.deselect(emailId);
+            }
     }
+
 
     render() {
 
         return (
             <div className={this.getClassName()}>
                 <div className='email-toggle-is-read'>
-                    <button onClick={this.toggleIsRead}>is read?</button>
+                    <input type='checkbox' onChange={this.toggleIsSelected}
+                           checked={this.props.isSelected[this.props.email.id]} />
                 </div>
                 <Link to={`/read/${this.props.email.id}`}>
                     <div className='email-date'>

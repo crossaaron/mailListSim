@@ -12,10 +12,8 @@ export default class App extends Component {
         this.state = {
             emails: EMAILS,
             isRead: {
-                "e4cb2243-7453-461c-a824-55ad3cbfd571": true
             },
             isSelected: {
-                "e4cb2243-7453-461c-a824-55ad3cbfd571": true
             }
         };
 
@@ -25,6 +23,8 @@ export default class App extends Component {
         this.deselect = this.deselect.bind(this);
         this.markSelectedRead = this.markSelectedRead.bind(this);
         this.markSelectedUnread = this.markSelectedUnread.bind(this);
+        this.selectAll = this.selectAll.bind(this);
+        this.deselectAll = this.deselectAll.bind(this);
     }
 
     markRead(emailId) {
@@ -71,6 +71,18 @@ export default class App extends Component {
         this.setState({isRead})
     }
 
+    selectAll() {
+        let isSelected = {};
+        for (let email of this.state.emails) {
+            isSelected[email.id] = true
+        }
+        this.setState({isSelected})
+    }
+
+    deselectAll() {
+        this.setState({isSelected: {}})
+    }
+
 
     render() {
 
@@ -88,7 +100,9 @@ export default class App extends Component {
                                    markSelectedRead={this.markSelectedRead}
                                    markSelectedUnread={this.markSelectedUnread}
                                    select={this.select}
-                                   deselect={this.deselect} />
+                                   deselect={this.deselect}
+                                   selectAll={this.selectAll}
+                                   deselectAll={this.deselectAll}/>
                         )}/>
                         <Route exact path='/read/:id' component={() => (
                             <EmailRead emails={this.state.emails}

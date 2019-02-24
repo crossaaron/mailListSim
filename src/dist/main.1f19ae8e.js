@@ -30579,7 +30579,11 @@ function (_Component) {
         onClick: this.props.markSelectedRead
       }, "mark read"), _react.default.createElement("button", {
         onClick: this.props.markSelectedUnread
-      }, "mark unread")), _react.default.createElement("div", {
+      }, "mark unread"), _react.default.createElement("button", {
+        onClick: this.props.selectAll
+      }, "select all"), _react.default.createElement("button", {
+        onClick: this.props.deselectAll
+      }, "deselect all")), _react.default.createElement("div", {
         id: "all-emails"
       }, this.props.emails.map(function (email, index) {
         return _react.default.createElement(_EmailRow.default, {
@@ -30589,8 +30593,6 @@ function (_Component) {
           isSelected: _this.props.isSelected,
           markRead: _this.props.markRead,
           markUnread: _this.props.markUnread,
-          markSelectedRead: _this.props.markSelectedRead,
-          markSelectedUnread: _this.props.markSelectedUnread,
           select: _this.props.select,
           deselect: _this.props.deselect
         });
@@ -31546,12 +31548,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
       emails: _MOCK_DATA.default,
-      isRead: {
-        "e4cb2243-7453-461c-a824-55ad3cbfd571": true
-      },
-      isSelected: {
-        "e4cb2243-7453-461c-a824-55ad3cbfd571": true
-      }
+      isRead: {},
+      isSelected: {}
     };
     _this.markRead = _this.markRead.bind(_assertThisInitialized(_this));
     _this.markUnread = _this.markUnread.bind(_assertThisInitialized(_this));
@@ -31559,6 +31557,8 @@ function (_Component) {
     _this.deselect = _this.deselect.bind(_assertThisInitialized(_this));
     _this.markSelectedRead = _this.markSelectedRead.bind(_assertThisInitialized(_this));
     _this.markSelectedUnread = _this.markSelectedUnread.bind(_assertThisInitialized(_this));
+    _this.selectAll = _this.selectAll.bind(_assertThisInitialized(_this));
+    _this.deselectAll = _this.deselectAll.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -31633,6 +31633,45 @@ function (_Component) {
       });
     }
   }, {
+    key: "selectAll",
+    value: function selectAll() {
+      var isSelected = {};
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.state.emails[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var email = _step.value;
+          isSelected[email.id] = true;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      this.setState({
+        isSelected: isSelected
+      });
+    }
+  }, {
+    key: "deselectAll",
+    value: function deselectAll() {
+      this.setState({
+        isSelected: {}
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -31652,7 +31691,9 @@ function (_Component) {
             markSelectedRead: _this2.markSelectedRead,
             markSelectedUnread: _this2.markSelectedUnread,
             select: _this2.select,
-            deselect: _this2.deselect
+            deselect: _this2.deselect,
+            selectAll: _this2.selectAll,
+            deselectAll: _this2.deselectAll
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -31718,7 +31759,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60366" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62319" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

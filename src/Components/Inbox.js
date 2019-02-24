@@ -11,6 +11,8 @@ export default class Inbox extends Component {
                 <p>
                     <button onClick={this.props.markSelectedRead}>mark read</button>
                     <button onClick={this.props.markSelectedUnread}>mark unread</button>
+                    <button onClick={this.props.selectAll}>select all</button>
+                    <button onClick={this.props.deselectAll}>deselect all</button>
                 </p>
                 <div id='all-emails'>
                     {this.props.emails.map((email, index) => {
@@ -21,8 +23,6 @@ export default class Inbox extends Component {
                                       isSelected={this.props.isSelected}
                                       markRead={this.props.markRead}
                                       markUnread={this.props.markUnread}
-                                      markSelectedRead={this.props.markSelectedRead}
-                                      markSelectedUnread={this.props.markSelectedUnread}
                                       select={this.props.select}
                                       deselect={this.props.deselect}
                             />

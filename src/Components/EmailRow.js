@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default class Inbox extends Component {
     constructor(props) {
         super(props);
-        this.toggleIsSelected = this.toggleIsSelected.bind(this)
+        this.toggleIsChecked = this.toggleIsChecked.bind(this)
     }
 
     getClassName() {
@@ -14,15 +14,18 @@ export default class Inbox extends Component {
         if (this.props.isRead[emailId]) {
             className += ' email-is-read'
         }
+        if (this.props.isSelected) {
+            className += ' selected' // Notice space before selected!!
+        }
         return className
     }
 
-    toggleIsSelected() {
+    toggleIsChecked() {
         let emailId = this.props.email.id
-            if (!this.props.isSelected[emailId]) {
-                this.props.select(emailId);
+            if (!this.props.isChecked[emailId]) {
+                this.props.check(emailId);
             } else {
-                this.props.deselect(emailId);
+                this.props.uncheck(emailId);
             }
     }
 
@@ -32,8 +35,8 @@ export default class Inbox extends Component {
         return (
             <div className={this.getClassName()}>
                 <div className='email-toggle-is-read'>
-                    <input type='checkbox' onChange={this.toggleIsSelected}
-                           checked={this.props.isSelected[this.props.email.id]} />
+                    <input type='checkbox' onChange={this.toggleIsChecked}
+                           checked={this.props.isChecked[this.props.email.id]} />
                 </div>
                 <Link to={`/read/${this.props.email.id}`}>
                     <div className='email-date'>

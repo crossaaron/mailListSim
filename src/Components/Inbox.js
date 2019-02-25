@@ -9,22 +9,23 @@ export default class Inbox extends Component {
                 <h1>Inbox</h1>
                 <p>You have {this.props.emails.length} emails</p>
                 <p>
-                    <button onClick={this.props.markSelectedRead}>mark read</button>
-                    <button onClick={this.props.markSelectedUnread}>mark unread</button>
-                    <button onClick={this.props.selectAll}>select all</button>
-                    <button onClick={this.props.deselectAll}>deselect all</button>
+                    <button onClick={this.props.markCheckedRead}>mark read</button>
+                    <button onClick={this.props.markCheckedUnread}>mark unread</button>
+                    <button onClick={this.props.checkAll}>check all</button>
+                    <button onClick={this.props.uncheckAll}>uncheck all</button>
                 </p>
                 <div id='all-emails'>
                     {this.props.emails.map((email, index) => {
                         return (
                             <EmailRow key={index}
                                       email={email}
+                                      isSelected={this.props.selectedIndex === index}
                                       isRead={this.props.isRead}
-                                      isSelected={this.props.isSelected}
                                       markRead={this.props.markRead}
                                       markUnread={this.props.markUnread}
-                                      select={this.props.select}
-                                      deselect={this.props.deselect}
+                                      isChecked={this.props.isChecked}
+                                      check={this.props.check}
+                                      uncheck={this.props.uncheck}
                             />
                         )
                     })}

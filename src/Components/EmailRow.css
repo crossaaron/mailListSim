@@ -1,6 +1,9 @@
 .email-row {
     overflow: hidden;
 }
+.email-row.selected {
+    border-left: 5px solid blue;
+}
 .email-is-read {
     background-color: rgba(0,0,0, .2);
 }
